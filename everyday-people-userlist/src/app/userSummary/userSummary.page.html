@@ -1,0 +1,47 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>
+      UserSummary
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-header collapse="condense">
+    <ion-toolbar>
+      <ion-title size="large">Tab 1</ion-title>
+    </ion-toolbar>
+  </ion-header>
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>Liste des utilisateurs</ion-card-title>
+      <ion-card-subtitle>{{ date | date}}</ion-card-subtitle>
+    </ion-card-header>
+    <ion-card-content>
+      <ion-list>
+        <ion-item *ngFor="let user of users" [(userId)]="user.id">
+          <ion-thumbnail slot="start">
+            <img alt="Silhouette of mountains" src="https://i.pravatar.cc/150?img={{user.image}}" />
+          </ion-thumbnail>
+          <ion-label>
+            {{user.name}} {{user.lastName}} 
+            <p>{{user.email}}</p>
+            <a href="/tabs/userDetails?id={{user.id}}">
+              Détails
+            </a>
+          </ion-label>
+          <ion-badge *ngIf="user.online">
+            <input type='checkbox' [(ngModel)]="user.online" />online
+          </ion-badge>
+        </ion-item>
+
+      </ion-list>
+    </ion-card-content>
+  </ion-card>
+  <ion-fab slot="fixed" horizontal="end" vertical="bottom" (click)="newUser()">
+    <ion-fab-button>
+      <ion-icon name="add"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+  <app-explore-container name="Liste des utilisateurs"></app-explore-container>
+</ion-content>

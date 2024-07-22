@@ -1,0 +1,7 @@
+{
+  "name": "Everyday People Userlist",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}
