@@ -9,7 +9,7 @@ import { Storage } from '@ionic/storage-angular';
   styleUrls: ['userDetails.page.scss']
 })
 export class UserDetails {
-  @Input() users: User[] = UserSummary.users;
+  //@Input() users: User[] = UserSummary.users;
   
   constructor(private storage: Storage) {}
   fetchUser(){
