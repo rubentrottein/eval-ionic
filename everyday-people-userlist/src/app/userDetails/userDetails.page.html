@@ -1,7 +1,7 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
     <ion-title>
-      Détails du contact
+      Détails de {{ user.name }} {{ user.lastName }}
     </ion-title>
   </ion-toolbar>
 </ion-header>
@@ -13,19 +13,40 @@
     </ion-toolbar>
   </ion-header>
   <ion-card>
-    <img alt="image de {{ name }}" src="{{ image }}" />
+    <img alt="image de {{ user.name }}" src="https://i.pravatar.cc/800?img={{ user.image }}" />
     <ion-card-header>
-      <ion-card-title>{{ name }} {{ lastName }}</ion-card-title>
-      <ion-card-subtitle>{{ online }}</ion-card-subtitle>
-      <p>{{user.email}}</p>
-      <p>{{user.tel}}</p>
+      <ion-card-title>{{ user.name }} {{ user.lastName }}</ion-card-title>
+      <ion-card-subtitle>
+        <a href="mailto:{{user.email}}">{{user.email}}</a>
+        <ion-badge *ngIf="user.online">
+          <input type='checkbox' [(ngModel)]="user.online" />online
+        </ion-badge>  
+      </ion-card-subtitle>
+      <a href="tel:{{user.tel}}">{{user.tel}}</a>
     </ion-card-header>
   
     <ion-card-content>
-      <h4>Modifier le contact</h4>
-      <input type="text" [(ngModel)] = "name">
-      <input type="text" [(ngModel)] = "image">
-      <input type="text" [(ngModel)] = "online">
+      <ion-accordion-group>
+        <ion-accordion value="first">
+          <ion-item slot="header" color="light">
+            <ion-label>Modifier le contact</ion-label>
+          </ion-item>
+          <div class="ion-padding" slot="content" (change)="saveUser(user)">
+            <input type="text" [(ngModel)] = "user.name" placeholder="{{ user.name }}">
+            <input type="text" [(ngModel)] = "user.lastName" placeholder="{{ user.lastName }}">
+            <input type="text" [(ngModel)] = "user.tel" placeholder="{{ user.tel }}">
+            <input type="text" [(ngModel)] = "user.email" placeholder="{{ user.email }}">
+            <input type="text" [(ngModel)] = "user.image" placeholder="{{ user.image }}">
+            <input type="text" [(ngModel)] = "user.online" placeholder="{{ user.online }}">
+          </div>
+          
+          <ion-fab slot="fixed" horizontal="end" vertical="bottom" (click)="deleteUser(user)">
+            <ion-fab-button>
+              <ion-icon name="trash-bin-outline"></ion-icon>
+            </ion-fab-button>
+          </ion-fab>
+        </ion-accordion>
+      </ion-accordion-group>
     </ion-card-content>
   </ion-card>
   <app-explore-container name="Détails du contact"></app-explore-container>

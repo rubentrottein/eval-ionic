@@ -1,0 +1,18 @@
+img{
+    display: block;
+    margin: auto;
+    width: 100%;
+}
+
+ion-card-subtitle{
+    display: flex;
+    justify-content: space-between;
+}
+ion-badge{
+    --background: lime;
+}
+.ion-padding{
+    display: grid;
+    place-content: center;
+
+}

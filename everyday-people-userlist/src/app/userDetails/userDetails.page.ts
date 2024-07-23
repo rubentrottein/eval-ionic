@@ -1,7 +1,7 @@
-import { Component, Input } from '@angular/core';
+import { Component } from '@angular/core';
 import { User } from '../models/User';
-import { UserSummary } from '../userSummary/userSummary.page';
 import { Storage } from '@ionic/storage-angular';
+import { UserSummary } from '../userSummary/userSummary.page';
 
 @Component({
   selector: 'app-tab2',
@@ -9,15 +9,35 @@ import { Storage } from '@ionic/storage-angular';
   styleUrls: ['userDetails.page.scss']
 })
 export class UserDetails {
-  //@Input() users: User[] = UserSummary.users;
-  
   constructor(private storage: Storage) {}
+  users : User[] = [];
+  
+  async ngOnInit(): Promise<void> {
+    await this.storage.create();
+    const storedUsers = await this.storage.get('users');
+    console.info(storedUsers);
+    if (storedUsers) {
+      this.users = storedUsers;
+      console.info(this.users);
+    } else {
+    }
+  }
   fetchUser(){
+    console.info(this.users);
     let url = new URL(window.location.href);
     let id = Number(url.searchParams.get("id"));
-    console.log(this.users);
     return this.users[id]
   }
+
+  /*user : User = {
+    id : 999,
+    name : "erreur",
+    lastName : "erreur",
+    tel : "erreur",
+    email : "erreur",
+    image : 999,
+    online : false
+  };*/
   user = this.fetchUser();
   name = this.user.name;
   lastName = this.user.lastName;
@@ -26,13 +46,19 @@ export class UserDetails {
   image = this.user.image;
   online = this.user.online;
 
-  active = false;
+  saveUser(user: User): void {
+    this.users.push(user);
+  }
+
+  async saveUsers(): Promise<void> {
+    await this.storage['set']('users', this.users);
+  }
 
   async deleteUser(user: User) {
     const index = this.users.indexOf(user);
     if (index > -1) {
       this.users.splice(index, 1);
-      await UserSummary.saveUsersStatic(this.storage, this.users);
+      await this.saveUsers();
     }
   }
 }
