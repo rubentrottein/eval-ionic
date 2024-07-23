@@ -5,6 +5,7 @@ import { FormsModule } from '@angular/forms';
 import { ExploreContainerComponentModule } from '../explore-container/explore-container.module';
 
 import { UserDetailsRoutingModule } from './userDetails-routing.module';
+import { UserDetails } from './userDetails.page';
 
 @NgModule({
   imports: [
@@ -12,7 +13,8 @@ import { UserDetailsRoutingModule } from './userDetails-routing.module';
     CommonModule,
     FormsModule,
     ExploreContainerComponentModule,
-    UserDetailsRoutingModule
+    UserDetailsRoutingModule,
   ],
+  declarations: [UserDetails] 
 })
 export class UserDetailsModule {}

@@ -19,16 +19,13 @@
     </ion-card-header>
     <ion-card-content>
       <ion-list>
-        <ion-item *ngFor="let user of users" [(userId)]="user.id">
+        <ion-item *ngFor="let user of users">
           <ion-thumbnail slot="start">
-            <img alt="Silhouette of mountains" src="https://i.pravatar.cc/150?img={{user.image}}" />
+            <img alt="Avatar de {{ user.name }}" src="https://i.pravatar.cc/150?img={{user.image}}" />
           </ion-thumbnail>
           <ion-label>
-            {{user.name}} {{user.lastName}} 
-            <p>{{user.email}}</p>
-            <a href="/tabs/userDetails?id={{user.id}}">
-              Détails
-            </a>
+            {{user.name}} {{user.lastName}}
+            <a href="/tabs/userDetails?id={{user.id}}">Détails</a>
           </ion-label>
           <ion-badge *ngIf="user.online">
             <input type='checkbox' [(ngModel)]="user.online" />online

@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output, ChangeDetectionStrategy } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { Storage } from '@ionic/storage-angular'; // Ensure you have the correct import for Storage
 import { User } from '../models/User';
 
@@ -6,7 +6,6 @@ import { User } from '../models/User';
   selector: 'app-tab1',
   templateUrl: 'userSummary.page.html',
   styleUrls: ['userSummary.page.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush // Use OnPush change detection
 })
 export class UserSummary {
 
@@ -18,7 +17,7 @@ export class UserSummary {
   ];
 
   constructor(private storage: Storage) {}
-
+  
   async ngOnInit(): Promise<void> {
     await this.storage.create();
     const storedUsers = await this.storage.get('users');
@@ -26,10 +25,10 @@ export class UserSummary {
       this.users = storedUsers;
     }
   }
-
   async saveUsers(): Promise<void> {
     await this.storage['set']('users', this.users);
   }
+  
   static saveUsersStatic(storage: Storage, users: User[]): Promise<void> {
     return storage['set']('users', users);
   }
@@ -54,7 +53,7 @@ export class UserSummary {
         online: true
       };
       this.saveUser(newUser);
-      this.saveUsers();
+      UserSummary.saveUsersStatic(this.storage, this.users);
     } else {
       alert("Error: Missing user information.");
     }
@@ -62,6 +61,7 @@ export class UserSummary {
 
   saveUser(user: User): void {
     this.users.push(user);
+    console.log(this.storage.forEach((key, value, index) => {return `${index} = ${key} : ${value}` }))
   }
 
   gotoAnchor(anchor: any): void {

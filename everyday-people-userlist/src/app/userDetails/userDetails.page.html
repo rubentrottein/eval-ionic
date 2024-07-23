@@ -15,8 +15,10 @@
   <ion-card>
     <img alt="image de {{ name }}" src="{{ image }}" />
     <ion-card-header>
-      <ion-card-title>{{ name }}</ion-card-title>
+      <ion-card-title>{{ name }} {{ lastName }}</ion-card-title>
       <ion-card-subtitle>{{ online }}</ion-card-subtitle>
+      <p>{{user.email}}</p>
+      <p>{{user.tel}}</p>
     </ion-card-header>
   
     <ion-card-content>

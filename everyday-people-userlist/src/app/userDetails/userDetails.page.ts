@@ -9,15 +9,23 @@ import { Storage } from '@ionic/storage-angular';
   styleUrls: ['userDetails.page.scss']
 })
 export class UserDetails {
-  @Input() userId = 0;
-  @Input() users: User[] = [];
+  @Input() users: User[] = UserSummary.users;
   
-  constructor(private storage: Storage) {
+  constructor(private storage: Storage) {}
+  fetchUser(){
+    let url = new URL(window.location.href);
+    let id = Number(url.searchParams.get("id"));
+    console.log(this.users);
+    return this.users[id]
   }
+  user = this.fetchUser();
+  name = this.user.name;
+  lastName = this.user.lastName;
+  tel = this.user.tel;
+  email = this.user.email;
+  image = this.user.image;
+  online = this.user.online;
 
-  name = "test";
-  image = 1;
-  online = true;
   active = false;
 
   async deleteUser(user: User) {
